@@ -13,6 +13,6 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //今日のお昼は明太ポテチコッぺパン
     }
 }
