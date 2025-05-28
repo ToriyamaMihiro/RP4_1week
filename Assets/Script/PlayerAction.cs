@@ -15,9 +15,12 @@ public class PlayerAction : MonoBehaviour
     float eggSpeed = 10;
 
 
-    bool isHave = true;//卵を持っているかどうか
+    public bool isHave = true;//卵を持っているかどうか
 
     bool isJump;
+    bool isRight = true;//右を向いているか
+    bool isUp;//上を向いてる
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,28 +34,46 @@ public class PlayerAction : MonoBehaviour
         Move();
         Jump();
         Throw();  //卵を投げる
+        Status(); //卵を持ってるときと持ってないときのステータス変化
     }
 
     void Move()
     {
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
 
-        if (Input.GetKey(KeyCode.A))
+        if (!isUp)
+        {
+
+            if (isRight)
+            {
+                direction = new Vector2(1, 0);//値的に右を向いている
+            }
+            else
+            {
+                direction = new Vector2(-1, 0);//値的に左を向いている
+            }
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);//y方向は今のvelicityを入れる
-            direction = new Vector2(-1, 0);//値的に左を向いている
+            isRight = false;
             //this.GetComponent<SpriteRenderer>().flipX = true;
         }
 
-
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-            direction = new Vector2(1, 0);//値的に右を向いている
+            isRight = true;
+            //this.GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            direction = new Vector2(0, 1);//値的に右を向いている
             //this.GetComponent<SpriteRenderer>().flipX = false;
         }
     }
-
 
     void Jump()
     {
@@ -80,6 +101,7 @@ public class PlayerAction : MonoBehaviour
     }
 
     //卵を投げる
+    //もしプレイヤーの大きさを変えることがあればここのeggBulletのInstantiateを変更する
     void Throw()
     {
         if (Input.GetKey(KeyCode.Z) && isHave)
@@ -89,12 +111,73 @@ public class PlayerAction : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
+
             isHave = false;
-
+            GameObject eggBullet;
             //投げる用の卵を新しいオブジェクトとして呼び出す
-            GameObject eggBullet = Instantiate(eggPrefab, transform.position, Quaternion.identity);
-
+            if (isRight)
+            {
+                //呼び出した位置がプレイヤーの中心だと困るので、ずらしてる
+                eggBullet = Instantiate(eggPrefab, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
+            }
+            else
+            {
+                eggBullet = Instantiate(eggPrefab, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
+            }
             eggBullet.GetComponent<Rigidbody2D>().velocity = direction * eggSpeed;
+        }
+    }
+
+    //卵を取り返す
+    void Catch()
+    {
+
+    }
+
+    //卵を持ってるときと持ってないときのステータス変化
+    void Status()
+    {
+        if (isHave)//持ってるとき
+        {
+            moveSpeed = 2.5f;
+            jumpPower = 3;
+            //eggSpeed = 10;
+        }
+        else//持ってないとき
+        {
+            moveSpeed = 5f;
+            jumpPower = 7;
+            //eggSpeed = 10;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        EnemyEggCatchAction eggCatch;
+        GameObject obj = GameObject.Find("EggCatchCollider");
+        eggCatch = obj.GetComponent<EnemyEggCatchAction>();
+
+        if (collision.gameObject.tag == "EggCatch")
+        {
+            //敵の卵を奪う
+            if (!isHave&& eggCatch.isHave)
+            {
+                //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+                isHave = true;
+            }
+            else //持ってるときに敵の下通ったら取られる
+            {
+                //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
+                isHave = false;
+            }
         }
     }
 

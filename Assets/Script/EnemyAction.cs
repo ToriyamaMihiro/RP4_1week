@@ -19,35 +19,13 @@ public class EnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Catch();//卵をキャッチする
+        //Catch();//卵をキャッチする
     }
 
-    void Catch()
-    {
-        if (isEggHit)
-        {
-            //敵についてる子オブジェクトを捜してsetActiveをtrueにする
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(true);
-            }
-            isHave = true;
-        }
-    }
+   
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Egg" && !isHave)
-        {
-            isEggHit = true;
-            isHave = true;
-
-            //もし飛ばされた卵なら消す
-            if (collision.gameObject.name == "Egg(Clone)")
-            {
-                Destroy(collision.gameObject);
-            }
-        }
-
+      
     }
 
 }
