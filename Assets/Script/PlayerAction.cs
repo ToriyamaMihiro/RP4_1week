@@ -37,7 +37,7 @@ public class PlayerAction : MonoBehaviour
         Jump();
         Throw();  //卵を投げる
         Status(); //卵を持ってるときと持ってないときのステータス変化
-        Catch();
+        EggHaveManager();
         EggMoveManager();
     }
 
@@ -132,10 +132,13 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    //卵移動のクールタイム
     void EggMoveManager()
     {
+        //もし卵が移動したら
         if (isEggMove)
         {
+            //卵が次に移動できるまでのクールタイムを溜める
             eggMoveTimer++;
             if (eggMoveTimer >= 5)
             {
@@ -145,8 +148,8 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    //卵を取り返す
-    void Catch()
+    //見かけ上(SetActive)卵を持っているか
+    void EggHaveManager()
     {
         //卵を持っている
         if (isHave)
@@ -188,11 +191,8 @@ public class PlayerAction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //EnemyEggCatchAction eggCatch;
-        //GameObject obj = GameObject.Find("EggCatchCollider");
-        //eggCatch = obj.GetComponent<EnemyEggCatchAction>();
-
-        //持っているときに当たったら取られる
+        //敵のキャッチ範囲かつ、卵を持っているかつ卵の移動が可能なら
+        //敵に卵を取られる
         if (collision.gameObject.tag == "EggCatch" && isHave &&!isEggMove)
         {
             isHave = false;
@@ -200,13 +200,6 @@ public class PlayerAction : MonoBehaviour
             isEggMove = true;
 
         }
-        ////持っているときに当たったら取られる
-        //if (collision.gameObject.tag == "EggTake" && !isHave)
-        //{
-        //    isHave = true;
-            
-
-        //}
     }
 
 }

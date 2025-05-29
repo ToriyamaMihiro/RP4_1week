@@ -38,35 +38,29 @@ public class EnemyEggCatchAction : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
 
-        //もし飛ばされた卵なら消す
+        //もし飛ばされた卵かつ卵を持っていなかったら
+        //飛ばされた卵を消して卵を持つ
         if (collision.gameObject.name == "Egg(Clone)" && !isHave)
         {
             Destroy(collision.gameObject);
             isHave = true;
         }
 
+        //プレイヤーに当たったら
         if (collision.gameObject.tag == "Player")
         {
             PlayerAction player;
             GameObject objP = GameObject.Find("Player");
             player = objP.GetComponent<PlayerAction>();
-            //敵が持ってるときに取られる
+
+            //卵を持っているかつプレイヤーは持っていないかつ卵が移動可能なら
+            //卵をプレイヤーに取られる
             if (isHave && !player.isHave && !player.isEggMove)
             {
                 isHave = false;
                 player.isHave = true;
                 player.isEggMove = true;
             }
-
-            ////プレイヤーが持ってるときに奪う
-
-            //if (player.isHave)
-            //{
-            //    player.isHave = false;
-            //    isEggHit = true;
-            //}
-
         }
-
     }
 }
