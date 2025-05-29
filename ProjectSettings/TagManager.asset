@@ -8,7 +8,7 @@ TagManager:
   - Enemy
   - Wall
   - EggCatch
-  - DummyEgg
+  - EggTake
   layers:
   - Default
   - TransparentFX

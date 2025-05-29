@@ -51,10 +51,11 @@ public class EnemyEggCatchAction : MonoBehaviour
             GameObject objP = GameObject.Find("Player");
             player = objP.GetComponent<PlayerAction>();
             //“G‚ª‚Á‚Ä‚é‚Æ‚«‚Éæ‚ç‚ê‚é
-            if (isHave && !player.isHave)
+            if (isHave && !player.isHave && !player.isEggMove)
             {
                 isHave = false;
                 player.isHave = true;
+                player.isEggMove = true;
             }
 
             ////ƒvƒŒƒCƒ„[‚ª‚Á‚Ä‚é‚Æ‚«‚É’D‚¤
