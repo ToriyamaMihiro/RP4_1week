@@ -24,31 +24,27 @@ public class EnemyEggCatchAction : MonoBehaviour
 
     void EggHave()
     {
-        if (isEggHit)
+        if (isHave)
         {
             //Œ©‚©‚¯ã‚Ì—‘‚ÌsetActive‚ğtrue‚É‚·‚é
             egg.SetActive(true);
-            isHave = true;
-            isEggHit = false;
         }
 
-        if (!isHave)
+        else
         {
             egg.SetActive(false);
         }
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Egg" && !isHave)
-        {
-            isEggHit = true;
 
-            //‚à‚µ”ò‚Î‚³‚ê‚½—‘‚È‚çÁ‚·
-            if (collision.gameObject.name == "Egg(Clone)")
-            {
-                Destroy(collision.gameObject);
-            }
+        //‚à‚µ”ò‚Î‚³‚ê‚½—‘‚È‚çÁ‚·
+        if (collision.gameObject.name == "Egg(Clone)" && !isHave)
+        {
+            Destroy(collision.gameObject);
+            isHave = true;
         }
+
         if (collision.gameObject.tag == "Player")
         {
             PlayerAction player;
@@ -58,6 +54,7 @@ public class EnemyEggCatchAction : MonoBehaviour
             if (isHave && !player.isHave)
             {
                 isHave = false;
+                player.isHave = true;
             }
 
             ////ƒvƒŒƒCƒ„[‚ª‚Á‚Ä‚é‚Æ‚«‚É’D‚¤

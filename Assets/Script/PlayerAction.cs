@@ -14,12 +14,14 @@ public class PlayerAction : MonoBehaviour
     float jumpPower = 7;
     float eggSpeed = 10;
 
+    int eggMoveTimer;
 
     public bool isHave = true;//卵を持っているかどうか
 
     bool isJump;
     bool isRight = true;//右を向いているか
     bool isUp;//上を向いてる
+  public  bool isEggMove;
 
 
     // Start is called before the first frame update
@@ -35,6 +37,8 @@ public class PlayerAction : MonoBehaviour
         Jump();
         Throw();  //卵を投げる
         Status(); //卵を持ってるときと持ってないときのステータス変化
+        Catch();
+        EggMoveManager();
     }
 
     void Move()
@@ -128,11 +132,42 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    void EggMoveManager()
+    {
+        if (isEggMove)
+        {
+            eggMoveTimer++;
+            if (eggMoveTimer >= 5)
+            {
+                isEggMove = false;
+                eggMoveTimer = 0;
+            }
+        }
+    }
+
     //卵を取り返す
     void Catch()
     {
+        //卵を持っている
+        if (isHave)
+        {
+            //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+            }
 
+        }
+        else //持ってない
+        {
+            //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
     }
+
 
     //卵を持ってるときと持ってないときのステータス変化
     void Status()
@@ -153,32 +188,25 @@ public class PlayerAction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyEggCatchAction eggCatch;
-        GameObject obj = GameObject.Find("EggCatchCollider");
-        eggCatch = obj.GetComponent<EnemyEggCatchAction>();
+        //EnemyEggCatchAction eggCatch;
+        //GameObject obj = GameObject.Find("EggCatchCollider");
+        //eggCatch = obj.GetComponent<EnemyEggCatchAction>();
 
-        if (collision.gameObject.tag == "EggCatch")
+        //持っているときに当たったら取られる
+        if (collision.gameObject.tag == "EggCatch" && isHave &&!isEggMove)
         {
-            //敵の卵を奪う
-            if (!isHave&& eggCatch.isHave)
-            {
-                //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-                isHave = true;
-            }
-            else //持ってるときに敵の下通ったら取られる
-            {
-                //プレイヤーについてる子オブジェクトを捜してsetActiveをfalseにする
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
-                isHave = false;
-            }
+            isHave = false;
+            collision.gameObject.GetComponent<EnemyEggCatchAction>().isHave = true;
+            isEggMove = true;
+
         }
+        ////持っているときに当たったら取られる
+        //if (collision.gameObject.tag == "EggTake" && !isHave)
+        //{
+        //    isHave = true;
+            
+
+        //}
     }
 
 }
