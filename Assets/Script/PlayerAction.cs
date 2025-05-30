@@ -47,7 +47,6 @@ public class PlayerAction : MonoBehaviour
 
         if (!isUp)
         {
-
             if (isRight)
             {
                 direction = new Vector2(1, 0);//’l“I‚É‰E‚ðŒü‚¢‚Ä‚¢‚é
