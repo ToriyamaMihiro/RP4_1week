@@ -198,8 +198,12 @@ public class PlayerAction : MonoBehaviour
             isHave = false;
             collision.gameObject.GetComponent<EnemyEggCatchAction>().isHave = true;
             isEggMove = true;
-
         }
+
+        //飛ばした卵が敵にキャッチされる処理はEnemyEggCatchAction.csにあるので
+        //敵が卵をキャッチしたときに何かするときはEnemyEggCatchAction.csにも書く
+
+        //敵の下にある卵を取る処理はEnemyEggTakeAction.csにある
     }
 
 }
