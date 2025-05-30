@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - EggCatch
   - EggTake
+  - Stage
   layers:
   - Default
   - TransparentFX

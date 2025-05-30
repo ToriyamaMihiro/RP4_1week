@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6182875164215553412}
   - component: {fileID: 6182875164215553413}
   - component: {fileID: 6182875164215553417}
+  - component: {fileID: -5624433184204578098}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -150,6 +151,18 @@ MonoBehaviour:
   eggPrefab: {fileID: 5400484009793456959, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}
   isHave: 1
   isEggMove: 0
+--- !u!114 &-5624433184204578098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182875164215553414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4c0832c48d9834fabb1a639710bfe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2251698299183663446
 PrefabInstance:
   m_ObjectHideFlags: 0
