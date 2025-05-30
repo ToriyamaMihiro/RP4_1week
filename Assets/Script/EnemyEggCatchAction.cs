@@ -46,21 +46,21 @@ public class EnemyEggCatchAction : MonoBehaviour
             isHave = true;
         }
 
-        //プレイヤーに当たったら
-        if (collision.gameObject.tag == "Player")
-        {
-            PlayerAction player;
-            GameObject objP = GameObject.Find("Player");
-            player = objP.GetComponent<PlayerAction>();
+        ////プレイヤーに当たったら
+        //if (collision.gameObject.tag == "Player")
+        //{
+        //    PlayerAction player;
+        //    GameObject objP = GameObject.Find("Player");
+        //    player = objP.GetComponent<PlayerAction>();
 
-            //卵を持っているかつプレイヤーは持っていないかつ卵が移動可能なら
-            //卵をプレイヤーに取られる
-            if (isHave && !player.isHave && !player.isEggMove)
-            {
-                isHave = false;
-                player.isHave = true;
-                player.isEggMove = true;
-            }
-        }
+        //    //卵を持っているかつプレイヤーは持っていないかつ卵が移動可能なら
+        //    //卵をプレイヤーに取られる
+        //    if (isHave && !player.isHave && !player.isEggMove)
+        //    {
+        //        isHave = false;
+        //        player.isHave = true;
+        //        player.isEggMove = true;
+        //    }
+        //}
     }
 }

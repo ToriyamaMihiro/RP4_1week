@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyEggTakeAction : MonoBehaviour
 {
+    [SerializeField] EnemyEggCatchAction linkedEgg;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,18 +19,17 @@ public class EnemyEggTakeAction : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyEggCatchAction eggCatch;
-        GameObject obj = GameObject.FindWithTag("EggCatch");
-        eggCatch = obj.GetComponent<EnemyEggCatchAction>();
+        //GameObject obj = GameObject.FindWithTag("EggCatch");
+        //EnemyEggCatchAction eggCatch = obj.GetComponent<EnemyEggCatchAction>();
 
         PlayerAction player;
         GameObject objP = GameObject.Find("Player");
         player = objP.GetComponent<PlayerAction>();
 
-        //íDÇÌÇÍÇΩÇÁè¡Ç∑
-        if (collision.gameObject.tag == "Player" &&  eggCatch.isHave&&!player.isEggMove)
+        //ÉvÉåÉCÉÑÅ[Ç…ìñÇΩÇ¡ÇΩÇÁéÊÇÁÇÍÇÈ
+        if (collision.gameObject.tag == "Player" && linkedEgg.isHave && !player.isEggMove)
         {
-            eggCatch.isHave = false;
+            linkedEgg.isHave = false;
             player.isHave = true;
             player.isEggMove = true;
         }
