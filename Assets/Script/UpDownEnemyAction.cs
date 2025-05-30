@@ -5,6 +5,9 @@ using UnityEngine;
 public class UpDownEnemyAction : MonoBehaviour
 {
     private Rigidbody2D rb;
+
+    [SerializeField] EnemyEggCatchAction eggCatch;
+
     float moveSpeed = 2;
 
     int direction = 1;
@@ -21,8 +24,16 @@ public class UpDownEnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        UpDownJudge();
+        //—‘‚ğ‚à‚Á‚Ä‚¢‚½‚ç~‚Ü‚é
+        if (!eggCatch.isHave)
+        {
+            Move();
+            UpDownJudge();
+        }
+        else
+        {
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x,0);
+        }
     }
 
     void Move()
@@ -56,16 +67,16 @@ public class UpDownEnemyAction : MonoBehaviour
     {
         //ã‰º‚©‚çray‚ğ”ò‚Î‚µ‚Ä•ûŒü“]Š·‚·‚é‚©‚Ì”»’è‚ğ‚Æ‚é
         int layerMask = 1 << 6;
-        float rayLength = 0.6f;
+    
 
         Vector2 up = transform.position;
         Vector2 down = transform.position;
 
-        RaycastHit2D hitUp = Physics2D.Raycast(up, Vector2.up, rayLength, layerMask);
-        RaycastHit2D hitDown = Physics2D.Raycast(down, Vector2.down, rayLength, layerMask);
+        RaycastHit2D hitUp = Physics2D.Raycast(up, Vector2.up, 0.6f, layerMask);
+        RaycastHit2D hitDown = Physics2D.Raycast(down, Vector2.down, 1.2f, layerMask);
 
-        Debug.DrawRay(up, Vector2.up * rayLength, Color.red);
-        Debug.DrawRay(down, Vector2.down * rayLength, Color.red);
+        Debug.DrawRay(up, Vector2.up * 0.6f, Color.red);
+        Debug.DrawRay(down, Vector2.down * 1.2f, Color.red);
 
 
         return hitUp.collider != null || hitDown.collider != null;

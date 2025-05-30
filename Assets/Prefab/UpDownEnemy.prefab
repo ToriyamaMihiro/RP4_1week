@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d31402f99a56f648b5db499b0d384f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eggCatch: {fileID: 0}
+  eggCatch: {fileID: 8308297535043721384}
 --- !u!50 &8308297534541400643
 Rigidbody2D:
   serializedVersion: 4
@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8725fe5f11a9aba4aa4a8dd8aa822ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eggCatch: {fileID: 8308297535043721384}
 --- !u!1001 &8308297535013143297
 PrefabInstance:
   m_ObjectHideFlags: 0

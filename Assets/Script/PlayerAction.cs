@@ -80,7 +80,7 @@ public class PlayerAction : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && !isJump)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
