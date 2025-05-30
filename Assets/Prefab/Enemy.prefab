@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d31402f99a56f648b5db499b0d384f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linkedEgg: {fileID: 8308297535043721384}
+  eggCatch: {fileID: 0}
 --- !u!50 &8308297534541400643
 Rigidbody2D:
   serializedVersion: 4
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 8308297535684834948}
   - component: {fileID: 8308297535684834949}
   - component: {fileID: 8308297535684834945}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

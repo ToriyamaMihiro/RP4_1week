@@ -21,7 +21,7 @@ public class PlayerAction : MonoBehaviour
     bool isJump;
     bool isRight = true;//右を向いているか
     bool isUp;//上を向いてる
-  public  bool isEggMove;
+    public bool isEggMove;
 
 
     // Start is called before the first frame update
@@ -81,7 +81,7 @@ public class PlayerAction : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
@@ -98,10 +98,24 @@ public class PlayerAction : MonoBehaviour
     //床にいるかの判定
     bool isGround()
     {
+        //左右真ん中からrayを飛ばしてジャンプできるかの判定をとる
         int layerMask = 1 << 6 | 1 << 7;
-        //オブジェクトのレイヤーに該当するLayerをつけ忘れないように
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.8f, layerMask);
-        return hit.collider != null;
+        float rayLength = 0.6f;
+        float offset = 0.5f; // 横にずらす距離
+
+        Vector2 center = transform.position;
+        Vector2 left = center + Vector2.left * offset;
+        Vector2 right = center + Vector2.right * offset;
+
+        RaycastHit2D hitCenter = Physics2D.Raycast(center, Vector2.down, rayLength, layerMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(left, Vector2.down, rayLength, layerMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(right, Vector2.down, rayLength, layerMask);
+
+        Debug.DrawRay(center, Vector2.down * rayLength, Color.red);
+        Debug.DrawRay(left, Vector2.down * rayLength, Color.green);
+        Debug.DrawRay(right, Vector2.down * rayLength, Color.blue);
+
+        return hitCenter.collider != null || hitLeft.collider != null || hitRight.collider != null;
     }
 
     //卵を投げる
@@ -193,7 +207,7 @@ public class PlayerAction : MonoBehaviour
     {
         //敵のキャッチ範囲かつ、卵を持っているかつ卵の移動が可能なら
         //敵に卵を取られる
-        if (collision.gameObject.tag == "EggCatch" && isHave &&!isEggMove)
+        if (collision.gameObject.tag == "EggCatch" && isHave && !isEggMove)
         {
             isHave = false;
             collision.gameObject.GetComponent<EnemyEggCatchAction>().isHave = true;
