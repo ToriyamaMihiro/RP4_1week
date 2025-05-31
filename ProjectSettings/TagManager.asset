@@ -10,6 +10,7 @@ TagManager:
   - EggCatch
   - EggTake
   - Stage
+  - Goal
   layers:
   - Default
   - TransparentFX

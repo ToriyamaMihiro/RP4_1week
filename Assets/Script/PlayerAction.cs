@@ -173,6 +173,8 @@ public class PlayerAction : MonoBehaviour
                 child.gameObject.SetActive(true);
             }
 
+            
+
         }
         else //‚Á‚Ä‚È‚¢
         {
