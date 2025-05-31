@@ -142,6 +142,10 @@ public class PlayerAction : MonoBehaviour
                 eggBullet = Instantiate(eggPrefab, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
             }
             eggBullet.GetComponent<Rigidbody2D>().velocity = direction * eggSpeed;
+
+            //卵を投げるSE再生
+
+
         }
     }
 
@@ -172,9 +176,6 @@ public class PlayerAction : MonoBehaviour
             {
                 child.gameObject.SetActive(true);
             }
-
-            
-
         }
         else //持ってない
         {
@@ -213,6 +214,10 @@ public class PlayerAction : MonoBehaviour
             isHave = false;
             collision.gameObject.GetComponent<EnemyEggCatchAction>().isHave = true;
             isEggMove = true;
+
+            //卵を取られたSE再生
+            //プレイヤーが卵を持ってないリソースに変更
+            //敵が卵を持ってるリソースに変更
         }
 
         //飛ばした卵が敵にキャッチされる処理はEnemyEggCatchAction.csにあるので

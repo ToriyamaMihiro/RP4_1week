@@ -44,6 +44,9 @@ public class EnemyEggCatchAction : MonoBehaviour
         {
             Destroy(collision.gameObject);
             isHave = true;
+
+            //敵が卵をキャッチしたSE再生
+            //敵が卵を持ってるリソースに変更
         }
     }
 }

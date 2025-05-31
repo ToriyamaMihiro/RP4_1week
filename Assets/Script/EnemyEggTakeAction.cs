@@ -31,6 +31,10 @@ public class EnemyEggTakeAction : MonoBehaviour
             eggCatch.isHave = false;
             player.isHave = true;
             player.isEggMove = true;
+
+            //卵を取ったSE再生
+            //プレイヤーが卵を持ってるリソースに変更
+            //敵が卵を持ってないリソースに変更
         }
 
     }
