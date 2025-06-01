@@ -16,18 +16,23 @@ public class PlayerAction : MonoBehaviour
 
     int eggMoveTimer;
 
-    public bool isHave = true;//—‘‚ğ‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    public bool isHave = true;//åµã‚’æŒã£ã¦ã„ã‚‹ã‹ã©ã†ã‹
 
     bool isJump;
-    bool isRight = true;//‰E‚ğŒü‚¢‚Ä‚¢‚é‚©
-    bool isUp;//ã‚ğŒü‚¢‚Ä‚é
+    bool isRight = true;//å³ã‚’å‘ã„ã¦ã„ã‚‹ã‹
+    bool isUp;//ä¸Šã‚’å‘ã„ã¦ã‚‹
     public bool isEggMove;
 
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆç”¨
+    public float nowSpeed;//åˆ¤å®šç”¨ã®ã‚¹ãƒ”ãƒ¼ãƒ‰
+    public bool isJumpAnime;//ã‚¸ãƒ£ãƒ³ãƒ—
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,8 +40,8 @@ public class PlayerAction : MonoBehaviour
     {
         Move();
         Jump();
-        Throw();  //—‘‚ğ“Š‚°‚é
-        Status(); //—‘‚ğ‚Á‚Ä‚é‚Æ‚«‚Æ‚Á‚Ä‚È‚¢‚Æ‚«‚ÌƒXƒe[ƒ^ƒX•Ï‰»
+        Throw();  //åµã‚’æŠ•ã’ã‚‹
+        Status(); //åµã‚’æŒã£ã¦ã‚‹ã¨ãã¨æŒã£ã¦ãªã„ã¨ãã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å¤‰åŒ–
         EggHaveManager();
         EggMoveManager();
     }
@@ -45,62 +50,76 @@ public class PlayerAction : MonoBehaviour
     {
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
 
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚»ãƒƒãƒˆ
+        animator.SetFloat("Speed", nowSpeed);//ç§»å‹•ã‚¢ãƒ‹ãƒ¡
+        nowSpeed = 0;//ãƒœã‚¿ãƒ³æŠ¼ã—ã¦ãªã„ã¨ãæ­¢ã¾ã‚‹
+
         if (!isUp)
         {
             if (isRight)
             {
-                direction = new Vector2(1, 0);//’l“I‚É‰E‚ğŒü‚¢‚Ä‚¢‚é
+                direction = new Vector2(1, 0);//å€¤çš„ã«å³ã‚’å‘ã„ã¦ã„ã‚‹
             }
             else
             {
-                direction = new Vector2(-1, 0);//’l“I‚É¶‚ğŒü‚¢‚Ä‚¢‚é
+                direction = new Vector2(-1, 0);//å€¤çš„ã«å·¦ã‚’å‘ã„ã¦ã„ã‚‹
             }
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);//y•ûŒü‚Í¡‚Ìvelicity‚ğ“ü‚ê‚é
+            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);//yæ–¹å‘ã¯ä»Šã®velicityã‚’å…¥ã‚Œã‚‹
             isRight = false;
             //this.GetComponent<SpriteRenderer>().flipX = true;
+            nowSpeed = moveSpeed;//ã‚¢ãƒ‹ãƒ¡ã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã«ä»Šã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’å…¥ã‚Œã‚‹
+            transform.rotation = Quaternion.Euler(0, 180, 0);//è¦‹ãŸç›®ã‚’å·¦å‘ã‹ã›ã‚‹
         }
+       
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
             isRight = true;
             //this.GetComponent<SpriteRenderer>().flipX = false;
+            nowSpeed = moveSpeed;//ã‚¢ãƒ‹ãƒ¡ã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã«ä»Šã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’å…¥ã‚Œã‚‹
+            transform.rotation = Quaternion.Euler(0, 0, 0);//è¦‹ãŸç›®ã‚’å³å‘ã‹ã›ã‚‹
         }
+        
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            direction = new Vector2(0, 1);//’l“I‚É‰E‚ğŒü‚¢‚Ä‚¢‚é
+            direction = new Vector2(0, 1);//å€¤çš„ã«å³ã‚’å‘ã„ã¦ã„ã‚‹
             //this.GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 
     void Jump()
     {
+        animator.SetBool("isJump", isJumpAnime);//ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ãƒ‹ãƒ¡ã«å¤‰æ›´
+
         if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
         if (isGround())
         {
-            isJump = false;//ƒWƒƒƒ“ƒv
+            isJump = false;//ã‚¸ãƒ£ãƒ³ãƒ—
+            isJumpAnime = false;
         }
         else
         {
             isJump = true;
+            isJumpAnime=true;
         }
     }
 
-    //°‚É‚¢‚é‚©‚Ì”»’è
+    //åºŠã«ã„ã‚‹ã‹ã®åˆ¤å®š
     bool isGround()
     {
-        //¶‰E^‚ñ’†‚©‚çray‚ğ”ò‚Î‚µ‚ÄƒWƒƒƒ“ƒv‚Å‚«‚é‚©‚Ì”»’è‚ğ‚Æ‚é
+        //å·¦å³çœŸã‚“ä¸­ã‹ã‚‰rayã‚’é£›ã°ã—ã¦ã‚¸ãƒ£ãƒ³ãƒ—ã§ãã‚‹ã‹ã®åˆ¤å®šã‚’ã¨ã‚‹
         int layerMask = 1 << 6 | 1 << 7;
         float rayLength = 0.6f;
-        float offset = 0.5f; // ‰¡‚É‚¸‚ç‚·‹——£
+        float offset = 0.5f; // æ¨ªã«ãšã‚‰ã™è·é›¢
 
         Vector2 center = transform.position;
         Vector2 left = center + Vector2.left * offset;
@@ -117,13 +136,13 @@ public class PlayerAction : MonoBehaviour
         return hitCenter.collider != null || hitLeft.collider != null || hitRight.collider != null;
     }
 
-    //—‘‚ğ“Š‚°‚é
-    //‚à‚µƒvƒŒƒCƒ„[‚Ì‘å‚«‚³‚ğ•Ï‚¦‚é‚±‚Æ‚ª‚ ‚ê‚Î‚±‚±‚ÌeggBullet‚ÌInstantiate‚ğ•ÏX‚·‚é
+    //åµã‚’æŠ•ã’ã‚‹
+    //ã‚‚ã—ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¤§ãã•ã‚’å¤‰ãˆã‚‹ã“ã¨ãŒã‚ã‚Œã°ã“ã“ã®eggBulletã®Instantiateã‚’å¤‰æ›´ã™ã‚‹
     void Throw()
     {
         if (Input.GetKey(KeyCode.Z) && isHave)
         {
-            //ƒvƒŒƒCƒ„[‚É‚Â‚¢‚Ä‚éqƒIƒuƒWƒFƒNƒg‚ğ‘{‚µ‚ÄsetActive‚ğfalse‚É‚·‚é
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã¤ã„ã¦ã‚‹å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æœã—ã¦setActiveã‚’falseã«ã™ã‚‹
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(false);
@@ -131,10 +150,10 @@ public class PlayerAction : MonoBehaviour
 
             isHave = false;
             GameObject eggBullet;
-            //“Š‚°‚é—p‚Ì—‘‚ğV‚µ‚¢ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚ÄŒÄ‚Ño‚·
+            //æŠ•ã’ã‚‹ç”¨ã®åµã‚’æ–°ã—ã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦å‘¼ã³å‡ºã™
             if (isRight)
             {
-                //ŒÄ‚Ño‚µ‚½ˆÊ’u‚ªƒvƒŒƒCƒ„[‚Ì’†S‚¾‚Æ¢‚é‚Ì‚ÅA‚¸‚ç‚µ‚Ä‚é
+                //å‘¼ã³å‡ºã—ãŸä½ç½®ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä¸­å¿ƒã ã¨å›°ã‚‹ã®ã§ã€ãšã‚‰ã—ã¦ã‚‹
                 eggBullet = Instantiate(eggPrefab, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
             }
             else
@@ -143,19 +162,19 @@ public class PlayerAction : MonoBehaviour
             }
             eggBullet.GetComponent<Rigidbody2D>().velocity = direction * eggSpeed;
 
-            //—‘‚ğ“Š‚°‚éSEÄ¶
+            //åµã‚’æŠ•ã’ã‚‹SEå†ç”Ÿ
 
 
         }
     }
 
-    //—‘ˆÚ“®‚ÌƒN[ƒ‹ƒ^ƒCƒ€
+    //åµç§»å‹•ã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ 
     void EggMoveManager()
     {
-        //‚à‚µ—‘‚ªˆÚ“®‚µ‚½‚ç
+        //ã‚‚ã—åµãŒç§»å‹•ã—ãŸã‚‰
         if (isEggMove)
         {
-            //—‘‚ªŸ‚ÉˆÚ“®‚Å‚«‚é‚Ü‚Å‚ÌƒN[ƒ‹ƒ^ƒCƒ€‚ğ—­‚ß‚é
+            //åµãŒæ¬¡ã«ç§»å‹•ã§ãã‚‹ã¾ã§ã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ã‚’æºœã‚ã‚‹
             eggMoveTimer++;
             if (eggMoveTimer >= 5)
             {
@@ -165,21 +184,21 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    //Œ©‚©‚¯ã(SetActive)—‘‚ğ‚Á‚Ä‚¢‚é‚©
+    //è¦‹ã‹ã‘ä¸Š(SetActive)åµã‚’æŒã£ã¦ã„ã‚‹ã‹
     void EggHaveManager()
     {
-        //—‘‚ğ‚Á‚Ä‚¢‚é
+        //åµã‚’æŒã£ã¦ã„ã‚‹
         if (isHave)
         {
-            //ƒvƒŒƒCƒ„[‚É‚Â‚¢‚Ä‚éqƒIƒuƒWƒFƒNƒg‚ğ‘{‚µ‚ÄsetActive‚ğfalse‚É‚·‚é
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã¤ã„ã¦ã‚‹å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æœã—ã¦setActiveã‚’falseã«ã™ã‚‹
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
             }
         }
-        else //‚Á‚Ä‚È‚¢
+        else //æŒã£ã¦ãªã„
         {
-            //ƒvƒŒƒCƒ„[‚É‚Â‚¢‚Ä‚éqƒIƒuƒWƒFƒNƒg‚ğ‘{‚µ‚ÄsetActive‚ğfalse‚É‚·‚é
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã¤ã„ã¦ã‚‹å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æœã—ã¦setActiveã‚’falseã«ã™ã‚‹
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(false);
@@ -188,16 +207,16 @@ public class PlayerAction : MonoBehaviour
     }
 
 
-    //—‘‚ğ‚Á‚Ä‚é‚Æ‚«‚Æ‚Á‚Ä‚È‚¢‚Æ‚«‚ÌƒXƒe[ƒ^ƒX•Ï‰»
+    //åµã‚’æŒã£ã¦ã‚‹ã¨ãã¨æŒã£ã¦ãªã„ã¨ãã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å¤‰åŒ–
     void Status()
     {
-        if (isHave)//‚Á‚Ä‚é‚Æ‚«
+        if (isHave)//æŒã£ã¦ã‚‹ã¨ã
         {
             moveSpeed = 2.5f;
             jumpPower = 3;
             //eggSpeed = 10;
         }
-        else//‚Á‚Ä‚È‚¢‚Æ‚«
+        else//æŒã£ã¦ãªã„ã¨ã
         {
             moveSpeed = 5f;
             jumpPower = 7;
@@ -207,23 +226,23 @@ public class PlayerAction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //“G‚ÌƒLƒƒƒbƒ`”ÍˆÍ‚©‚ÂA—‘‚ğ‚Á‚Ä‚¢‚é‚©‚Â—‘‚ÌˆÚ“®‚ª‰Â”\‚È‚ç
-        //“G‚É—‘‚ğæ‚ç‚ê‚é
+        //æ•µã®ã‚­ãƒ£ãƒƒãƒç¯„å›²ã‹ã¤ã€åµã‚’æŒã£ã¦ã„ã‚‹ã‹ã¤åµã®ç§»å‹•ãŒå¯èƒ½ãªã‚‰
+        //æ•µã«åµã‚’å–ã‚‰ã‚Œã‚‹
         if (collision.gameObject.tag == "EggCatch" && isHave && !isEggMove)
         {
             isHave = false;
             collision.gameObject.GetComponent<EnemyEggCatchAction>().isHave = true;
             isEggMove = true;
 
-            //—‘‚ğæ‚ç‚ê‚½SEÄ¶
-            //ƒvƒŒƒCƒ„[‚ª—‘‚ğ‚Á‚Ä‚È‚¢ƒŠƒ\[ƒX‚É•ÏX
-            //“G‚ª—‘‚ğ‚Á‚Ä‚éƒŠƒ\[ƒX‚É•ÏX
+            //åµã‚’å–ã‚‰ã‚ŒãŸSEå†ç”Ÿ
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒåµã‚’æŒã£ã¦ãªã„ãƒªã‚½ãƒ¼ã‚¹ã«å¤‰æ›´
+            //æ•µãŒåµã‚’æŒã£ã¦ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã«å¤‰æ›´
         }
 
-        //”ò‚Î‚µ‚½—‘‚ª“G‚ÉƒLƒƒƒbƒ`‚³‚ê‚éˆ—‚ÍEnemyEggCatchAction.cs‚É‚ ‚é‚Ì‚Å
-        //“G‚ª—‘‚ğƒLƒƒƒbƒ`‚µ‚½‚Æ‚«‚É‰½‚©‚·‚é‚Æ‚«‚ÍEnemyEggCatchAction.cs‚É‚à‘‚­
+        //é£›ã°ã—ãŸåµãŒæ•µã«ã‚­ãƒ£ãƒƒãƒã•ã‚Œã‚‹å‡¦ç†ã¯EnemyEggCatchAction.csã«ã‚ã‚‹ã®ã§
+        //æ•µãŒåµã‚’ã‚­ãƒ£ãƒƒãƒã—ãŸã¨ãã«ä½•ã‹ã™ã‚‹ã¨ãã¯EnemyEggCatchAction.csã«ã‚‚æ›¸ã
 
-        //“G‚Ì‰º‚É‚ ‚é—‘‚ğæ‚éˆ—‚ÍEnemyEggTakeAction.cs‚É‚ ‚é
+        //æ•µã®ä¸‹ã«ã‚ã‚‹åµã‚’å–ã‚‹å‡¦ç†ã¯EnemyEggTakeAction.csã«ã‚ã‚‹
     }
 
 }
