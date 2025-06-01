@@ -26,6 +26,7 @@ public class PlayerAction : MonoBehaviour
     //アニメーション切り替え用
     public float nowSpeed;//判定用のスピード
     public bool isJumpAnime;//ジャンプ
+    public bool isUpAnime;//上向いてるか
     private Animator animator;
 
     // Start is called before the first frame update
@@ -52,7 +53,10 @@ public class PlayerAction : MonoBehaviour
 
         //アニメーターセット
         animator.SetFloat("Speed", nowSpeed);//移動アニメ
+        animator.SetBool("isUp", isUpAnime);//上向きアニメ
+
         nowSpeed = 0;//ボタン押してないとき止まる
+        isUpAnime = false;
 
         if (!isUp)
         {
@@ -89,6 +93,7 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             direction = new Vector2(0, 1);//値的に右を向いている
+            isUpAnime = true;
             //this.GetComponent<SpriteRenderer>().flipX = false;
         }
     }

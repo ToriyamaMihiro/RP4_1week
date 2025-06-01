@@ -103,7 +103,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.10111308}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -114,7 +114,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.79777384}
   m_EdgeRadius: 0
 --- !u!50 &6182875164215553413
 Rigidbody2D:
@@ -152,6 +152,9 @@ MonoBehaviour:
   eggPrefab: {fileID: 5400484009793456959, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}
   isHave: 1
   isEggMove: 0
+  nowSpeed: 0
+  isJumpAnime: 0
+  isUpAnime: 0
 --- !u!114 &-5624433184204578098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5400484009793456955, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 5400484009793456955, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}
       propertyPath: m_LocalPosition.z

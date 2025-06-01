@@ -10,16 +10,33 @@ public class EnemyAction : MonoBehaviour
     bool isEggHit;
     bool isHave;
 
+    [SerializeField] EnemyEggCatchAction eggCatch;
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨
+    bool isCatch;
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Catch();//—‘‚ğƒLƒƒƒbƒ`‚·‚é
+        //Catch();//åµã‚’ã‚­ãƒ£ãƒƒãƒã™ã‚‹
+
+        animator.SetBool("isCatch", isCatch);//æŒã£ã¦ã‚‹ã‚¢ãƒ‹ãƒ¡
+        if (eggCatch.isHave)
+        {
+            isCatch = true;
+        }
+        else
+        {
+            isCatch= false;
+        }
+
     }
 
    

@@ -8,45 +8,51 @@ public class EnemyEggCatchAction : MonoBehaviour
     bool isEggHit;
     public bool isHave;
 
+    
     [SerializeField] GameObject egg;
 
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //”»’è‚ª•Ê‚È‚Ì‚ÅAƒXƒNƒŠƒvƒg‚ðEnemy‚Æ•ª‚¯‚é
-        EggHave();//—‘‚ðƒLƒƒƒbƒ`‚·‚é
+        //åˆ¤å®šãŒåˆ¥ãªã®ã§ã€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’Enemyã¨åˆ†ã‘ã‚‹
+        EggHave();//åµã‚’ã‚­ãƒ£ãƒƒãƒã™ã‚‹
     }
 
     void EggHave()
     {
+        
+
         if (isHave)
         {
-            //Œ©‚©‚¯ã‚Ì—‘‚ÌsetActive‚ðtrue‚É‚·‚é
+            //è¦‹ã‹ã‘ä¸Šã®åµã®setActiveã‚’trueã«ã™ã‚‹
             egg.SetActive(true);
+           
         }
 
         else
         {
             egg.SetActive(false);
+           
         }
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
 
-        //‚à‚µ”ò‚Î‚³‚ê‚½—‘‚©‚Â—‘‚ðŽ‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç
-        //”ò‚Î‚³‚ê‚½—‘‚ðÁ‚µ‚Ä—‘‚ðŽ‚Â
+        //ã‚‚ã—é£›ã°ã•ã‚ŒãŸåµã‹ã¤åµã‚’æŒã£ã¦ã„ãªã‹ã£ãŸã‚‰
+        //é£›ã°ã•ã‚ŒãŸåµã‚’æ¶ˆã—ã¦åµã‚’æŒã¤
         if (collision.gameObject.name == "Egg(Clone)" && !isHave)
         {
             Destroy(collision.gameObject);
             isHave = true;
 
-            //“G‚ª—‘‚ðƒLƒƒƒbƒ`‚µ‚½SEÄ¶
-            //“G‚ª—‘‚ðŽ‚Á‚Ä‚éƒŠƒ\[ƒX‚É•ÏX
+            //æ•µãŒåµã‚’ã‚­ãƒ£ãƒƒãƒã—ãŸSEå†ç”Ÿ
+            //æ•µãŒåµã‚’æŒã£ã¦ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã«å¤‰æ›´
         }
     }
 }
