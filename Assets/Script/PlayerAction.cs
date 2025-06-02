@@ -40,11 +40,15 @@ public class PlayerAction : MonoBehaviour
     void Update()
     {
         GoalManager goal;
-        GameObject obj = GameObject.Find("Goal");
-        goal = obj.GetComponent<GoalManager>();
+        GameObject objG = GameObject.Find("Goal");
+        goal = objG.GetComponent<GoalManager>();
 
-        //ゴールしていなければ
-        if (!goal.isGoal)
+        ScanChangeAction sceneChange;
+        GameObject obj = GameObject.Find("SceneChange");
+        sceneChange = obj.GetComponent<ScanChangeAction>();
+
+        //ゴールしていないかつシーン遷移が終わっているか
+        if (!goal.isGoal || !sceneChange.isStart)
         {
             Move();
             Jump();
