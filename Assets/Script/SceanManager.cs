@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SceanManager : MonoBehaviour
 {
-    public string stageName;//ƒXƒe[ƒWƒZƒŒƒNƒg‚ÌƒXƒe[ƒW‚Ì–¼‘O
+    public string stageName;//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆæ™‚ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã®åå‰
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +26,17 @@ public class SceanManager : MonoBehaviour
             SceneManager.LoadScene(nowSceneIndexNumber);
         }
 
-        if (SceneManager.GetActiveScene().name == "StageSelect")
+        if (SceneManager.GetActiveScene().name == "Title")
         {
-            //G‚Á‚Ä‚¢‚éƒXƒe[ƒW‚Ì“üŒû‚É‰‚¶‚ÄƒV[ƒ“‚ğƒ[ƒh
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("StageSelect");
+            }
+        }
+
+            if (SceneManager.GetActiveScene().name == "StageSelect")
+        {
+            //è§¦ã£ã¦ã„ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã®å…¥å£ã«å¿œã˜ã¦ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰
             if (Input.GetKey(KeyCode.Z))
             {
                 if (stageName == "Stage1")
@@ -58,7 +66,7 @@ public class SceanManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "Stage")
         {
-            //ƒXƒe[ƒW‚Ì–¼‘O‚Ì‰Šú‰»
+            //ã‚¹ãƒ†ãƒ¼ã‚¸ã®åå‰ã®åˆæœŸåŒ–
             stageName = "";
         }
     }

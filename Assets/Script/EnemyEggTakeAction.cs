@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class EnemyEggTakeAction : MonoBehaviour
 {
     [SerializeField] EnemyEggCatchAction eggCatch;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -24,17 +26,18 @@ public class EnemyEggTakeAction : MonoBehaviour
         player = objP.GetComponent<PlayerAction>();
 
         
-        //ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚©‚Â—‘‚ğ‚à‚Á‚Ä‚¢‚é‚©‚Â—‘‚ÌˆÚ“®‚ª‰Â”\‚È‚ç
-        //ƒvƒŒƒCƒ„[‚É—‘‚ğæ‚ç‚ê‚é
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å½“ãŸã£ãŸã‹ã¤åµã‚’ã‚‚ã£ã¦ã„ã‚‹ã‹ã¤åµã®ç§»å‹•ãŒå¯èƒ½ãªã‚‰
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«åµã‚’å–ã‚‰ã‚Œã‚‹
         if (collision.gameObject.tag == "Player" && eggCatch.isHave && !player.isEggMove)
         {
+            
             eggCatch.isHave = false;
             player.isHave = true;
             player.isEggMove = true;
 
-            //—‘‚ğæ‚Á‚½SEÄ¶
-            //ƒvƒŒƒCƒ„[‚ª—‘‚ğ‚Á‚Ä‚éƒŠƒ\[ƒX‚É•ÏX
-            //“G‚ª—‘‚ğ‚Á‚Ä‚È‚¢ƒŠƒ\[ƒX‚É•ÏX
+            //åµã‚’å–ã£ãŸSEå†ç”Ÿ
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒåµã‚’æŒã£ã¦ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã«å¤‰æ›´
+            //æ•µãŒåµã‚’æŒã£ã¦ãªã„ãƒªã‚½ãƒ¼ã‚¹ã«å¤‰æ›´
         }
 
     }

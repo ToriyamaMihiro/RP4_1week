@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHave: 0
+  particle: {fileID: 2959637181382895271, guid: 8516860785121f749b7157c123008dd0, type: 3}
   egg: {fileID: 4161149097473787966}
 --- !u!1 &8308297535684834954
 GameObject:

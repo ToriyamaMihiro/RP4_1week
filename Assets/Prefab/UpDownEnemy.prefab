@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHave: 0
+  particle: {fileID: 2959637181382895271, guid: 8516860785121f749b7157c123008dd0, type: 3}
   egg: {fileID: 4161149097473787966}
 --- !u!1 &8308297535684834954
 GameObject:
@@ -426,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5400484009793456959, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 784585bbdf9191f4c9206b90f8b1ad71, type: 3}

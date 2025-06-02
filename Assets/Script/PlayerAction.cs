@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
@@ -39,28 +40,38 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GoalManager goal;
-        GameObject objG = GameObject.Find("Goal");
-        goal = objG.GetComponent<GoalManager>();
-
-        ScanChangeAction sceneChange;
-        GameObject obj = GameObject.Find("SceneChange");
-        sceneChange = obj.GetComponent<ScanChangeAction>();
-
-        //ゴールしていないかつシーン遷移が終わっているか
-        if (!goal.isGoal && !sceneChange.isStart)
+        //エラー出ないようにステージセレクトとタイトルではgoalとsceneChange呼び出さない
+        if (SceneManager.GetActiveScene().name == "StageSelect" || SceneManager.GetActiveScene().name == "Title")
         {
             Move();
             Jump();
-            Throw();  //卵を投げる
-            Status(); //卵を持ってるときと持ってないときのステータス変化
-            EggHaveManager();
-            EggMoveManager();
         }
-        //ずっと動きっぱなしになってしまうので初期化
         else
         {
-            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
+
+            GoalManager goal;
+            GameObject objG = GameObject.Find("Goal");
+            goal = objG.GetComponent<GoalManager>();
+
+            ScanChangeAction sceneChange;
+            GameObject obj = GameObject.Find("SceneChange");
+            sceneChange = obj.GetComponent<ScanChangeAction>();
+
+            //ゴールしていないかつシーン遷移が終わっているか
+            if (!goal.isGoal && !sceneChange.isStart)
+            {
+                Move();
+                Jump();
+                Throw();  //卵を投げる
+                Status(); //卵を持ってるときと持ってないときのステータス変化
+                EggHaveManager();
+                EggMoveManager();
+            }
+            //ずっと動きっぱなしになってしまうので初期化
+            else
+            {
+                this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
+            }
         }
     }
 

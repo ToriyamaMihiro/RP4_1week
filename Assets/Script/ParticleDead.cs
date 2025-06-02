@@ -7,6 +7,8 @@ public class ParticleDead : MonoBehaviour
     public float deadTime = 4;
     public float timer = 0;
 
+    //ここに音入れる④
+
     // Start is called before the first frame update
     void Start()
     {

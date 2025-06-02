@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class EnemyEggCatchAction : MonoBehaviour
 {
     // Start is called before the first frame update
     bool isEggHit;
     public bool isHave;
-
+    public GameObject particle;
     
     [SerializeField] GameObject egg;
 
@@ -48,6 +49,7 @@ public class EnemyEggCatchAction : MonoBehaviour
         //飛ばされた卵を消して卵を持つ
         if (collision.gameObject.name == "Egg(Clone)" && !isHave)
         {
+            Instantiate(particle, new Vector3(transform.position.x, transform.position.y+0.5f), Quaternion.identity);
             Destroy(collision.gameObject);
             isHave = true;
 
