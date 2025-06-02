@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GoalManager : MonoBehaviour
 {
     bool isEggGoal;//卵が先にゴールしているか
 
     bool isCloneEggBreak;//弾の卵を消したか
+
+    public bool isGoal;//ゴールしたか
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +28,10 @@ public class GoalManager : MonoBehaviour
         GameObject objP = GameObject.Find("Player");
         player = objP.GetComponent<PlayerAction>();
 
-        int nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
-
         //プレイヤーと卵が同時にゴールしたら
         if (collision.gameObject.tag == "Player" && player.isHave)
         {
-            //シーン遷移
-            nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
-
-            SceneManager.LoadScene("TestPlayer");
+            isGoal = true;
 
         }
 
@@ -52,10 +48,7 @@ public class GoalManager : MonoBehaviour
 
             if (collision.gameObject.tag == "Player")
             {
-                //シーン遷移
-                nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
-
-                SceneManager.LoadScene("GameScene");
+                isGoal = true;
             }
         }
     }

@@ -39,12 +39,25 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Jump();
-        Throw();  //卵を投げる
-        Status(); //卵を持ってるときと持ってないときのステータス変化
-        EggHaveManager();
-        EggMoveManager();
+        GoalManager goal;
+        GameObject obj = GameObject.Find("Goal");
+        goal = obj.GetComponent<GoalManager>();
+
+        //ゴールしていなければ
+        if (!goal.isGoal)
+        {
+            Move();
+            Jump();
+            Throw();  //卵を投げる
+            Status(); //卵を持ってるときと持ってないときのステータス変化
+            EggHaveManager();
+            EggMoveManager();
+        }
+        //ずっと動きっぱなしになってしまうので初期化
+        else
+        {
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
+        }
     }
 
     void Move()
@@ -78,7 +91,7 @@ public class PlayerAction : MonoBehaviour
             nowSpeed = moveSpeed;//アニメのスピードに今のスピードを入れる
             transform.rotation = Quaternion.Euler(0, 180, 0);//見た目を左向かせる
         }
-       
+
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -88,7 +101,7 @@ public class PlayerAction : MonoBehaviour
             nowSpeed = moveSpeed;//アニメのスピードに今のスピードを入れる
             transform.rotation = Quaternion.Euler(0, 0, 0);//見た目を右向かせる
         }
-        
+
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -114,7 +127,7 @@ public class PlayerAction : MonoBehaviour
         else
         {
             isJump = true;
-            isJumpAnime=true;
+            isJumpAnime = true;
         }
     }
 
