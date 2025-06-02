@@ -48,7 +48,7 @@ public class PlayerAction : MonoBehaviour
         sceneChange = obj.GetComponent<ScanChangeAction>();
 
         //ゴールしていないかつシーン遷移が終わっているか
-        if (!goal.isGoal || !sceneChange.isStart)
+        if (!goal.isGoal && !sceneChange.isStart)
         {
             Move();
             Jump();

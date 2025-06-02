@@ -7,7 +7,7 @@ public class ScanChangeAction : MonoBehaviour
 {
     float speed = 13f;
 
-    Vector2 startPosition = new Vector2(-20.4f, 0);
+    Vector2 startPosition = new Vector2(-22.4f, 0);
     Vector2 endPosition = new Vector2(0, 0);
 
 
