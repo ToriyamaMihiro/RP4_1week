@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +24,7 @@ public class PlayerAction : MonoBehaviour
     bool isRight = true;//右を向いているか
     bool isUp;//上を向いてる
     public bool isEggMove;
+    bool isDead;
 
     //アニメーション切り替え用
     public float nowSpeed;//判定用のスピード
@@ -30,11 +32,19 @@ public class PlayerAction : MonoBehaviour
     public bool isUpAnime;//上向いてるか
     private Animator animator;
 
+    //オーディオ
+    private AudioSource audioSource;
+    public AudioClip jumpAudio;
+    public AudioClip throwAudio;
+    public AudioClip catchAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -66,6 +76,7 @@ public class PlayerAction : MonoBehaviour
                 Status(); //卵を持ってるときと持ってないときのステータス変化
                 EggHaveManager();
                 EggMoveManager();
+                DeadPlayer();
             }
             //ずっと動きっぱなしになってしまうので初期化
             else
@@ -133,6 +144,7 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            audioSource.PlayOneShot(jumpAudio);
         }
         if (isGround())
         {
@@ -197,7 +209,8 @@ public class PlayerAction : MonoBehaviour
 
             //卵を投げるSE再生
 
-
+            //音なるよ
+            audioSource.PlayOneShot(throwAudio);
         }
     }
 
@@ -257,6 +270,21 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    //死ぬ処理
+    void DeadPlayer()
+    {
+        int nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
+        if (transform.position.y < -6)//画面外落ちたら
+        {
+            //シーンリセット
+            nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(nowSceneIndexNumber);
+
+        }
+
+
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         //敵のキャッチ範囲かつ、卵を持っているかつ卵の移動が可能なら
@@ -268,6 +296,8 @@ public class PlayerAction : MonoBehaviour
             isEggMove = true;
 
             //卵を取られたSE再生
+            //音なるよ
+            audioSource.PlayOneShot(catchAudio);
             //プレイヤーが卵を持ってないリソースに変更
             //敵が卵を持ってるリソースに変更
         }
