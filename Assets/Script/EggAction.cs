@@ -11,6 +11,8 @@ public class EggAction : MonoBehaviour
     public GameObject particleA;
     public GameObject particleB;
 
+    int time;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +28,20 @@ public class EggAction : MonoBehaviour
 
     void Break()
     {
-        if (isBreak)
+
+
+        if (isBreak&&time==0)
         {
+            time++;
             isBreak = false;
             Instantiate(particleA, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
             Instantiate(particleB, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+
+            PlayerAction player;
+            GameObject objP = GameObject.Find("Player");
+            player = objP.GetComponent<PlayerAction>();
+
+            player.isHave = false;
             gameObject.SetActive(false);
             Invoke("SceneLoad", 2f);
 
@@ -52,6 +63,8 @@ public class EggAction : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             isBreak = true;
+          
+           
         }
     }
 }

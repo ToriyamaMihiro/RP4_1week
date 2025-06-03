@@ -260,8 +260,8 @@ public class PlayerAction : MonoBehaviour
     {
         if (isHave)//持ってるとき
         {
-            moveSpeed = 2.5f;
-            jumpPower = 3;
+            moveSpeed = 4f;
+            jumpPower = 5;
             //eggSpeed = 10;
         }
         else//持ってないとき
