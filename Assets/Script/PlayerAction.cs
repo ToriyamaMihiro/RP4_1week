@@ -53,8 +53,10 @@ public class PlayerAction : MonoBehaviour
         //エラー出ないようにステージセレクトとタイトルではgoalとsceneChange呼び出さない
         if (SceneManager.GetActiveScene().name == "StageSelect" || SceneManager.GetActiveScene().name == "Title")
         {
+
             Move();
             Jump();
+
         }
         else
         {

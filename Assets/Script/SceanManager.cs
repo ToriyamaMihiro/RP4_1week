@@ -7,11 +7,18 @@ using UnityEngine.SceneManagement;
 public class SceanManager : MonoBehaviour
 {
     public string stageName;//ステージセレクト時のステージの名前
+    public bool isToutch;
+    public bool isStop;
 
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+
+    void NextScene()
+    {
+        SceneManager.LoadScene(stageName);
     }
 
     // Update is called once per frame
@@ -37,19 +44,34 @@ public class SceanManager : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "StageSelect")
         {
             //触っているステージの入口に応じてシーンをロード
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.Z) && isToutch)
             {
+                
+
                 if (stageName == "Stage1")
                 {
-                    SceneManager.LoadScene("Stage1");
+                    isStop = true;
+                    Invoke("NextScene", 1.8f);
                 }
                 if (stageName == "Stage2")
                 {
-                    SceneManager.LoadScene("Stage2");
+                    isStop = true;
+                    Invoke("NextScene", 1.8f);
                 }
                 if (stageName == "Stage3")
                 {
-                    SceneManager.LoadScene("Test");
+                    isStop = true;
+                    Invoke("NextScene", 1.8f);
+                }
+                if (stageName == "Stage4")
+                {
+                    isStop = true;
+                    Invoke("NextScene", 1.8f);
+                }
+                if (stageName == "Stage5")
+                {
+                    isStop = true;
+                    Invoke("NextScene", 1.8f);
                 }
             }
 
@@ -60,6 +82,7 @@ public class SceanManager : MonoBehaviour
         if (collision.gameObject.tag == "Stage")
         {
             stageName = collision.gameObject.name;
+            isToutch = true;
         }
     }
     void OnTriggerExit2D(Collider2D collision)
@@ -67,7 +90,8 @@ public class SceanManager : MonoBehaviour
         if (collision.gameObject.tag == "Stage")
         {
             //ステージの名前の初期化
-            stageName = "";
+            //stageName = "";
+            isToutch = false;
         }
     }
 }

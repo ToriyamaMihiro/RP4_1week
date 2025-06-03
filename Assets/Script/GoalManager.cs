@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class GoalManager : MonoBehaviour
 {
-    bool isEggGoal;//—‘‚ªæ‚ÉƒS[ƒ‹‚µ‚Ä‚¢‚é‚©
+    bool isEggGoal;//åµãŒå…ˆã«ã‚´ãƒ¼ãƒ«ã—ã¦ã„ã‚‹ã‹
 
-    bool isCloneEggBreak;//’e‚Ì—‘‚ğÁ‚µ‚½‚©
+    bool isCloneEggBreak;//å¼¾ã®åµã‚’æ¶ˆã—ãŸã‹
 
-    public bool isGoal;//ƒS[ƒ‹‚µ‚½‚©
+    public bool isGoal;//ã‚´ãƒ¼ãƒ«ã—ãŸã‹
+    public bool isEggAnime;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -28,14 +30,16 @@ public class GoalManager : MonoBehaviour
         GameObject objP = GameObject.Find("Player");
         player = objP.GetComponent<PlayerAction>();
 
-        //ƒvƒŒƒCƒ„[‚Æ—‘‚ª“¯‚ÉƒS[ƒ‹‚µ‚½‚ç
+        animator.SetBool("isEgg", isEggAnime);//ä¸Šå‘ãã‚¢ãƒ‹ãƒ¡
+
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨åµãŒåŒæ™‚ã«ã‚´ãƒ¼ãƒ«ã—ãŸã‚‰
         if (collision.gameObject.tag == "Player" && player.isHave)
         {
             isGoal = true;
 
         }
 
-        //—‘‚ªæ‚ÉƒS[ƒ‹‚µ‚ÄƒvƒŒƒCƒ„[‚ªŒã‚©‚çƒS[ƒ‹‚µ‚½‚ç
+        //åµãŒå…ˆã«ã‚´ãƒ¼ãƒ«ã—ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå¾Œã‹ã‚‰ã‚´ãƒ¼ãƒ«ã—ãŸã‚‰
         if (collision.gameObject.name == "Egg(Clone)" && !player.isHave || isEggGoal)
         {
             if (!isCloneEggBreak)
@@ -44,7 +48,8 @@ public class GoalManager : MonoBehaviour
                 isCloneEggBreak = true;
             }
             isEggGoal = true;
-            //—‘‚ªæ‚É“ü‚Á‚Ä‚¢‚éƒŠƒ\[ƒX‚ÉØ‚è‘Ö‚¦‚é
+            //åµãŒå…ˆã«å…¥ã£ã¦ã„ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+            isEggAnime = true;
 
             if (collision.gameObject.tag == "Player")
             {

@@ -9,7 +9,7 @@ public class ScanChangeAction : MonoBehaviour
 
     Vector2 startPosition = new Vector2(-22.4f, 0);
     Vector2 endPosition = new Vector2(0, 0);
-
+    Vector2 cameraPos;
 
     public bool isStart;
 
@@ -29,17 +29,19 @@ public class ScanChangeAction : MonoBehaviour
 
         if (isStart)
         {
-            //•‚¢lŠp‚ğˆÚ“®‚³‚¹‚é
+            //é»’ã„å››è§’ã‚’ç§»å‹•ã•ã›ã‚‹
             transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
             Invoke("StartMoveEnd", 1.8f);
         }
 
-        //ƒS[ƒ‹‚µ‚½‚ç
+        //ã‚´ãƒ¼ãƒ«ã—ãŸã‚‰
         if (player.isGoal)
         {
-            //•‚¢lŠp‚ğˆÚ“®‚³‚¹‚é
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, speed * Time.deltaTime);
-            //2•bŒã‚ÉƒV[ƒ“ˆÚ“®
+            cameraPos = transform.parent.position;
+
+            //é»’ã„å››è§’ã‚’ç§»å‹•ã•ã›ã‚‹
+            transform.position = Vector3.MoveTowards(transform.position, endPosition+cameraPos, speed * Time.deltaTime);
+            //2ç§’å¾Œã«ã‚·ãƒ¼ãƒ³ç§»å‹•
             Invoke("SceanLoad", 1.8f);
 
         }
@@ -49,7 +51,7 @@ public class ScanChangeAction : MonoBehaviour
     {
         int nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
 
-        //ƒV[ƒ“‘JˆÚ
+        //ã‚·ãƒ¼ãƒ³é·ç§»
         nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
 
         SceneManager.LoadScene(++nowSceneIndexNumber);

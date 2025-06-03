@@ -249,6 +249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageName: 
+  isToutch: 0
+  isStop: 0
 --- !u!1 &575917095
 GameObject:
   m_ObjectHideFlags: 0
