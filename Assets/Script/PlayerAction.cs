@@ -164,7 +164,7 @@ public class PlayerAction : MonoBehaviour
     bool isGround()
     {
         //左右真ん中からrayを飛ばしてジャンプできるかの判定をとる
-        int layerMask = 1 << 6 | 1 << 7;
+        int layerMask = 1 << 6 | 1 << 7 | 1 << 8;
         float rayLength = 0.6f;
         float offset = 0.5f; // 横にずらす距離
 
@@ -261,7 +261,7 @@ public class PlayerAction : MonoBehaviour
         if (isHave)//持ってるとき
         {
             moveSpeed = 4f;
-            jumpPower = 5;
+            jumpPower = 4.57f;
             //eggSpeed = 10;
         }
         else//持ってないとき

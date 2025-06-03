@@ -11,6 +11,8 @@ TagManager:
   - EggTake
   - Stage
   - Goal
+  - Door
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - UI
   - Wall
   - Enemy
-  - 
+  - Door
   - 
   - 
   - 

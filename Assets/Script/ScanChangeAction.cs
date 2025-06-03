@@ -40,7 +40,7 @@ public class ScanChangeAction : MonoBehaviour
             cameraPos = transform.parent.position;
 
             //黒い四角を移動させる
-            transform.position = Vector3.MoveTowards(transform.position, endPosition+cameraPos, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, endPosition + cameraPos, speed * Time.deltaTime);
             //2秒後にシーン移動
             Invoke("SceanLoad", 1.8f);
 
@@ -51,10 +51,18 @@ public class ScanChangeAction : MonoBehaviour
     {
         int nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
 
-        //シーン遷移
-        nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
+        if (SceneManager.GetActiveScene().name == "Stage5")
+        {
+            SceneManager.LoadScene("Title");
+        }
+        else
+        {
+            //シーン遷移
+            nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
 
-        SceneManager.LoadScene(++nowSceneIndexNumber);
+            SceneManager.LoadScene(++nowSceneIndexNumber);
+        }
+
     }
     void StartMoveEnd()
     {

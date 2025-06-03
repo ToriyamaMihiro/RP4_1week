@@ -84,11 +84,13 @@ public class GoalManager : MonoBehaviour
             isEggGoal = true;
             //卵が先に入っているリソースに切り替える
             isEggAnime = true;
+            animator.SetBool("isEgg", isEggAnime);
 
             if (collision.gameObject.tag == "Player")
             {
                 isGoal = true;
                 isLastGoal = true;
+
             }
         }
     }
