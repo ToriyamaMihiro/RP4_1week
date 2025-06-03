@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
+using UnityEngine.SceneManagement;
 
 public class EggAction : MonoBehaviour
 {
@@ -30,8 +31,20 @@ public class EggAction : MonoBehaviour
             isBreak = false;
             Instantiate(particleA, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
             Instantiate(particleB, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            Invoke("SceneLoad", 2f);
+
         }
+    }
+
+
+    void SceneLoad()
+    {
+        int nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
+
+            nowSceneIndexNumber = SceneManager.GetActiveScene().buildIndex;
+
+            SceneManager.LoadScene(nowSceneIndexNumber);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
