@@ -41,11 +41,11 @@ public class SceanManager : MonoBehaviour
             {
                 if (stageName == "Stage1")
                 {
-                    SceneManager.LoadScene("GameScene");
+                    SceneManager.LoadScene("Stage1");
                 }
                 if (stageName == "Stage2")
                 {
-                    SceneManager.LoadScene("TestPlayer");
+                    SceneManager.LoadScene("Stage2");
                 }
                 if (stageName == "Stage3")
                 {
