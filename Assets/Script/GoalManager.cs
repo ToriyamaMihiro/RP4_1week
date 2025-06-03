@@ -11,17 +11,51 @@ public class GoalManager : MonoBehaviour
     public bool isGoal;//ゴールしたか
     public bool isEggAnime;
     private Animator animator;
+    private AudioSource audioSource;
+    public AudioClip sound;
+    public AudioClip sound2;
+
+    int time;
+    bool isLastGoal;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isLastGoal && time == 0)
+        {
+            time++;
+            isLastGoal = false;
+            audioSource.PlayOneShot(sound);
+        }
+    }
+        
 
+  
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerAction player;
+        GameObject objP = GameObject.Find("Player");
+        player = objP.GetComponent<PlayerAction>();
+
+        //プレイヤーと卵が同時にゴールしたら
+        if (collision.gameObject.tag == "Player" && player.isHave)
+        {
+            audioSource.PlayOneShot(sound);
+        }
+
+        if (collision.gameObject.name == "Egg(Clone)" && !player.isHave)
+        {
+            audioSource.PlayOneShot(sound2);
+            
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision)
@@ -36,7 +70,7 @@ public class GoalManager : MonoBehaviour
         if (collision.gameObject.tag == "Player" && player.isHave)
         {
             isGoal = true;
-
+            
         }
 
         //卵が先にゴールしてプレイヤーが後からゴールしたら
@@ -54,6 +88,7 @@ public class GoalManager : MonoBehaviour
             if (collision.gameObject.tag == "Player")
             {
                 isGoal = true;
+                isLastGoal = true;
             }
         }
     }
